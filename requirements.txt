@@ -2,5 +2,5 @@ tensorflow
 numpy 
 pandas 
 pathlib
-matplotlib.pyplot
+matplotlib
 
