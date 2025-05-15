@@ -6,7 +6,7 @@ import tensorflow as tf
 import os
 
 # Load pre-trained model
-model = tf.keras.models.load_model('FruitModel.h5')
+model = tf.keras.models.load_model('model.h5')
 
 # Label mappings
 labels = {
