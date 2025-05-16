@@ -4,8 +4,9 @@ from tensorflow.keras.utils import load_img, img_to_array
 import numpy as np
 from keras.models import load_model
 import os
+
 # Load the trained model
-model = load_model("mobilenet_model.h5")
+model = load_model("mobilenet_model.h5", compile=False)
 
 # Label mappings
 labels = {
