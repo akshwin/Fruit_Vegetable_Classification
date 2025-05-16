@@ -1,12 +1,11 @@
 import streamlit as st
-import numpy as np
 from PIL import Image
 from tensorflow.keras.utils import load_img, img_to_array
-import tensorflow as tf
+import numpy as np
+from keras.models import load_model
 import os
-
-# Load pre-trained model
-model = tf.keras.models.load_model('model.h5')
+# Load the trained model
+model = load_model("mobilenet_model.h5")
 
 # Label mappings
 labels = {
@@ -36,9 +35,9 @@ def classify_image(img_path):
     img = load_img(img_path, target_size=(224, 224, 3))
     img_array = img_to_array(img) / 255.0
     img_array = np.expand_dims(img_array, axis=0)
-    prediction = model.predict(img_array)
+    prediction = model.predict(img_array)[0]
     predicted_class = labels[np.argmax(prediction)]
-    return predicted_class
+    return predicted_class.capitalize()
 
 # Streamlit app
 def run():
@@ -62,22 +61,22 @@ def run():
     # Main area
     st.title("🍎 Fruit & Vegetable Classifier🥦")
     st.write("Upload a clear image of a fruit or vegetable, and the model will tell you what it is!")
-
-    img_file = st.file_uploader("📤 Upload Image", type=["jpg", "jpeg", "png"])
+    
+    img_file = st.file_uploader("📤 Upload an MRI Image", type=['jpg', 'jpeg', 'png'])
 
     if img_file is not None:
-        # Save uploaded image temporarily
-        save_dir = "upload_image"
-        os.makedirs(save_dir, exist_ok=True)
-        save_path = os.path.join(save_dir, img_file.name)
+        upload_dir = "./upload_image"
+        os.makedirs(upload_dir, exist_ok=True)
+        save_path = os.path.join(upload_dir, img_file.name)
 
         with open(save_path, "wb") as f:
             f.write(img_file.getbuffer())
 
-        # Display uploaded image centered using columns
+        # Show uploaded image
+        # Centered and resized image display
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            st.image(Image.open(save_path), caption='🖼 Uploaded Image', width=300)
+            st.image(Image.open(save_path), caption='🖼 Uploaded MRI Scan', width=300)
 
         # Prediction
         prediction = classify_image(save_path)
@@ -88,9 +87,7 @@ def run():
         st.info(f"**Category**: {category}")
         st.success(f"**Predicted**: {prediction}")
 
-        # Clean up uploaded image
-        os.remove(save_path)
-
 # Run the app
 if __name__ == "__main__":
     run()
+    
