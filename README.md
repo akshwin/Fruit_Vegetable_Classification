@@ -94,7 +94,7 @@ This classifier is built using a **Convolutional Neural Network (CNN)** trained 
 
 No setup needed — launch the app directly in your browser:
 
-👉 [**Live App**](https://fruit-vegetable-detector.streamlit.app/)
+👉 [**Live App**](https://fruits-vegetables-classifier.streamlit.app/)
 
 ---
 
