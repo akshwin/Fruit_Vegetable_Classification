@@ -6,7 +6,7 @@ from keras.models import load_model
 import os
 
 # Load the trained model
-model = load_model("mobilenet_model.h5", compile=False)
+model = load_model("vgg.h5", compile=False)
 
 # Label mappings
 labels = {
@@ -37,8 +37,10 @@ def classify_image(img_path):
     img_array = img_to_array(img) / 255.0
     img_array = np.expand_dims(img_array, axis=0)
     prediction = model.predict(img_array)[0]
-    predicted_class = labels[np.argmax(prediction)]
-    return predicted_class.capitalize()
+    predicted_index = np.argmax(prediction)
+    predicted_class = labels[predicted_index]
+    confidence = prediction[predicted_index]
+    return predicted_class.capitalize(), confidence
 
 # Streamlit app
 def run():
@@ -46,24 +48,25 @@ def run():
 
     # Sidebar
     st.sidebar.title("Fruit & Veggie Classifier 🥦")
+    st.sidebar.markdown("Model Used: **VGG-16** ✅")
     st.sidebar.markdown("""
-    - This project uses a deep learning model to classify images of fruits and vegetables into 36 categories.
-    
-    - The model is developed with the help of the MobileNetV2 Architecture and trained on a dataset of 36 classes.
-    
-    **Steps to use:**
-    - Upload an image
-    - View prediction and category
+    - Classifies images into 36 fruits & vegetables.
+    - Upload an image to get prediction.
     """)
+
+    # Dropdowns for additional options
+    display_mode = st.sidebar.selectbox("🔍 Display Mode", ["Basic", "Detailed"])
+    show_confidence = st.sidebar.selectbox("📈 Show Confidence Score?", ["Yes", "No"])
+
     st.sidebar.markdown("---")
     st.sidebar.markdown("👨‍💻 Developed by Akshwin T ")
-    st.sidebar.markdown("📬 Contact: [akshwint.2003@gmail.com](mailto:youremail@example.com)")
+    st.sidebar.markdown("📬 Contact: [akshwint.2003@gmail.com](mailto:akshwint.2003@gmail.com)")
 
     # Main area
-    st.title("🍎 Fruit & Vegetable Classifier🥦")
+    st.title("🍎 Fruit & Vegetable Classifier 🥦")
     st.write("Upload a clear image of a fruit or vegetable, and the model will tell you what it is!")
-    
-    img_file = st.file_uploader("📤 Upload an MRI Image", type=['jpg', 'jpeg', 'png'])
+
+    img_file = st.file_uploader("📤 Upload an Image", type=['jpg', 'jpeg', 'png'])
 
     if img_file is not None:
         upload_dir = "./upload_image"
@@ -74,19 +77,25 @@ def run():
             f.write(img_file.getbuffer())
 
         # Show uploaded image
-        # Centered and resized image display
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            st.image(Image.open(save_path), caption='🖼 Uploaded MRI Scan', width=300)
+            st.image(Image.open(save_path), caption='🖼 Uploaded Image', width=300)
 
         # Prediction
-        prediction = classify_image(save_path)
+        prediction, confidence = classify_image(save_path)
         category = "Vegetable" if prediction in vegetables else "Fruit"
 
         # Results
         st.markdown("### 🔍 Prediction Result")
         st.info(f"**Category**: {category}")
         st.success(f"**Predicted**: {prediction}")
+
+        if show_confidence == "Yes":
+            st.markdown(f"**Confidence**: `{confidence * 100:.2f}%`")
+
+        if display_mode == "Detailed":
+            st.markdown("🔧 *Using VGG-16 model with transfer learning*")
+            st.markdown("📊 *Prediction vector available for internal logging*")
 
 # Run the app
 if __name__ == "__main__":
