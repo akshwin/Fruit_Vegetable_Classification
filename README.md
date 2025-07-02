@@ -1,77 +1,117 @@
-# Fruit and Vegetable Classification App 🍏🍅
+# 🍏 Fruit & Vegetable Classifier App
 
-## Overview
+A **Streamlit-powered web application** that uses a **deep learning model** to classify images of fruits and vegetables. Upload any image and let the AI instantly identify the item and tell you whether it's a **fruit** or a **vegetable**, along with the specific name (e.g., Apple, Carrot, Lettuce).
 
-This Streamlit app uses a pre-trained deep learning model to classify whether an uploaded image contains a fruit or a vegetable. The model has been trained on a variety of fruits and vegetables.
+---
 
-## Getting Started
+## 🚀 Quick Start
 
-To run the app locally, follow these steps:
+### 🔧 Installation
 
-1. Install the required libraries:
+Ensure you have Python installed. Then run the following:
 
-    ```bash
-    pip install streamlit pillow numpy tensorflow
-    ```
+```bash
+pip install streamlit pillow numpy tensorflow
+```
 
-2. Download the pre-trained model file (`FruitModel.h5`) and save it in the project directory.
+### 📁 Download the Model
 
-3. Run the Streamlit app:
+* Download the pre-trained model file: **`model.h5`**
+* Place it in the root directory of your project (same location as `app.py`)
 
-    ```bash
-    streamlit run app.py
-    ```
+### ▶️ Launch the App
 
-4. The app will open in your default web browser. Upload an image of a fruit or vegetable to see the classification result.
+```bash
+streamlit run app.py
+```
 
-## Model Information
+The app will launch in your browser at: `http://localhost:8501`
 
-The deep learning model (`FruitModel.h5`) used in this app is trained to recognize the following classes:
+---
 
-- Apple
-- Banana
-- Beetroot
-- Bell pepper
-- Cabbage
-- Capsicum
-- Carrot
-- Cauliflower
-- Chilli pepper
-- Corn
-- Cucumber
-- Eggplant
-- Garlic
-- Ginger
-- Grapes
-- Jalepeno
-- Kiwi
-- Lemon
-- Lettuce
-- Mango
-- Onion
-- Orange
-- Paprika
-- Pear
-- Peas
-- Pineapple
-- Pomegranate
-- Potato
-- Raddish
-- Soy beans
-- Spinach
-- Sweetcorn
-- Sweetpotato
-- Tomato
-- Turnip
-- Watermelon
+## 🧠 Model Overview
 
-## Usage
+This classifier is built using a **Convolutional Neural Network (CNN)** trained on a labeled dataset of various fruits and vegetables. It has been trained to recognize the following **36 classes**:
 
-1. Open the app in your web browser.
-2. Upload an image using the "Choose an image" button.
-3. The app will display the uploaded image and provide the predicted category (Fruit or Vegetable).
-4. The specific predicted label will also be shown (e.g., "Predicted: Apple" or "Predicted: Tomato").
+### 🥦 Vegetables
 
-## To run the Application Online 
+* Beetroot
+* Bell Pepper
+* Cabbage
+* Capsicum
+* Carrot
+* Cauliflower
+* Chilli Pepper
+* Corn
+* Cucumber
+* Eggplant
+* Garlic
+* Ginger
+* Jalepeno
+* Lettuce
+* Onion
+* Paprika
+* Peas
+* Potato
+* Raddish
+* Soy Beans
+* Spinach
+* Sweetcorn
+* Sweetpotato
+* Tomato
+* Turnip
 
-https://fruit-vegetable-detector.streamlit.app/
+### 🍎 Fruits
+
+* Apple
+* Banana
+* Grapes
+* Kiwi
+* Lemon
+* Mango
+* Orange
+* Pear
+* Pineapple
+* Pomegranate
+* Watermelon
+
+---
+
+## 🖼️ How to Use
+
+1. Launch the app and open it in your browser.
+2. Upload an image (`.jpg`, `.jpeg`, or `.png`) using the upload box.
+3. The app will:
+
+   * Display the uploaded image
+   * Predict whether the object is a fruit or vegetable
+   * Show the **exact class name** (e.g., "🍋 Lemon", "🥕 Carrot")
+   * Provide the model’s confidence score
+
+---
+
+## 🌐 Try It Online
+
+No setup needed — launch the app directly in your browser:
+
+👉 [**Live App**](https://fruits-vegetables-classifier.streamlit.app/)
+
+---
+
+## 📌 Project Structure
+
+```plaintext
+├── app.py                # Streamlit app file
+├── FruitModel.h5         # Pre-trained Keras model
+├── requirements.txt      # Optional: to specify all dependencies
+└── README.md             # This file
+```
+
+---
+
+## 📬 Contact
+
+👨‍💻 Developed by **Akshwin T**
+📧 Email: [akshwint.2003@gmail.com](mailto:akshwint.2003@gmail.com)
+
+---

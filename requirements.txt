@@ -1,6 +1,7 @@
 tensorflow
-numpy 
-pandas 
-pathlib
+keras
+numpy
+pandas
 matplotlib
-
+Pillow
+ipython

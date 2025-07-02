@@ -31,7 +31,7 @@ vegetables = {
     'Jalepeno', 'Ginger', 'Garlic', 'Peas', 'Eggplant'
 }
 
-# Prediction logic
+# Prediction function
 def classify_image(img_path):
     img = load_img(img_path, target_size=(224, 224, 3))
     img_array = img_to_array(img) / 255.0
@@ -42,35 +42,32 @@ def classify_image(img_path):
     confidence = prediction[predicted_index]
     return predicted_class.capitalize(), confidence
 
-# App logic
+# Main App
 def run():
-    st.set_page_config(page_title="Fruit & Vegetable Classifier", layout="centered",page_icon="🍎")
+    st.set_page_config(page_title="Fruit & Vegetable Classifier", layout="centered", page_icon="🍎")
 
     # Sidebar
     st.sidebar.title("Fruit & Veggie Classifier 🥦")
-    st.sidebar.markdown("Model Used: **VGG-16** ✅")
-    st.sidebar.markdown("- Classifies images into 36 fruits & vegetables.\n- Upload or select a sample image.")
+    st.sidebar.markdown("Model Used: **VGG-16**")
+    st.sidebar.markdown("- Upload or select a sample image.")
 
-    # Toggles
     display_mode = st.sidebar.selectbox("🔍 Display Mode", ["Basic", "Detailed"])
     show_confidence = st.sidebar.selectbox("📈 Show Confidence Score?", ["Yes", "No"])
 
     st.sidebar.markdown("---")
     st.sidebar.markdown("👨‍💻 Developed by Akshwin T ")
-    st.sidebar.markdown("📬 Contact: [akshwint.2003@gmail.com](mailto:akshwint.2003@gmail.com)")
+    st.sidebar.markdown("📬 [akshwint.2003@gmail.com](mailto:akshwint.2003@gmail.com)")
 
-    # Main content
+    # Main area
     st.title("🍎 Fruit & Vegetable Classifier 🥦")
     st.write("Upload a clear image or select a sample to classify it.")
-    
-    # File uploader
-    img_file = st.file_uploader("📤 Or Upload an Image", type=['jpg', 'jpeg', 'png'])
 
-    # Sample image upload
-    st.markdown("### 🖼 Try a Sample Image")
-    sample_choice = st.selectbox("Choose Sample Image", ["None", "Apple", "Potato", "Tomato","Beetroot"])
+    # Upload or select sample
+    img_file = st.file_uploader("📤 Upload an Image", type=['jpg', 'jpeg', 'png'])
+    st.markdown("### 🖼 Or Try a Sample Image")
+    sample_choice = st.selectbox("Choose Sample Image", ["None", "Apple", "Potato", "Tomato", "Beetroot"])
 
-    # Determine which image to use
+    # Determine image path
     image_path = None
     if sample_choice != "None":
         image_path = f"./upload_image/{sample_choice.lower()}.jpeg"
@@ -83,7 +80,7 @@ def run():
             f.write(img_file.getbuffer())
         st.image(Image.open(image_path), caption="Uploaded Image", width=300)
 
-    # Predict and show results
+    # Prediction
     if image_path:
         with st.spinner("🔍 Classifying..."):
             prediction, confidence = classify_image(image_path)
@@ -100,7 +97,7 @@ def run():
             st.markdown("🔧 *Model: VGG-16 with Transfer Learning*")
             st.markdown("📊 *Prediction vector internally computed*")
 
-        # Cleanup
+        # Cleanup uploaded image
         if sample_choice == "None" and os.path.exists(image_path):
             os.remove(image_path)
 
