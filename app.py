@@ -6,7 +6,7 @@ from keras.models import load_model
 import os
 
 # Load model
-model = load_model("model.h5", compile=False)
+model = load_model("vgg.h5", compile=False)
 
 # Label mappings
 labels = {
