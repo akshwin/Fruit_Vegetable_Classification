@@ -71,14 +71,31 @@ def run():
     image_path = None
     if sample_choice != "None":
         image_path = f"./upload_image/{sample_choice.lower()}.jpeg"
-        st.image(Image.open(image_path), caption=f"Sample Image: {sample_choice}", width=300)
-    elif img_file:
+        if os.path.exists(image_path):
+            st.image(Image.open(image_path), caption=f"Sample Image: {sample_choice}", width=300)
+        else:
+            st.error(f"❌ Sample image not found: `{image_path}`")
+            return
+    elif img_file is not None:
         upload_dir = "./upload_image"
         os.makedirs(upload_dir, exist_ok=True)
         image_path = os.path.join(upload_dir, img_file.name)
-        with open(image_path, "wb") as f:
-            f.write(img_file.getbuffer())
-        st.image(Image.open(image_path), caption="Uploaded Image", width=300)
+
+        try:
+            with open(image_path, "wb") as f:
+                f.write(img_file.getbuffer())
+
+            if os.path.exists(image_path):
+                st.image(Image.open(image_path), caption="Uploaded Image", width=300)
+            else:
+                st.error("❌ Failed to save uploaded image.")
+                return
+        except Exception as e:
+            st.error(f"❌ Error processing uploaded image: {e}")
+            return
+    else:
+        st.warning("Please upload an image or select a sample to continue.")
+        return
 
     # Prediction
     if image_path:
@@ -96,6 +113,7 @@ def run():
         if display_mode == "Detailed":
             st.markdown("🔧 *Model: VGG-16 with Transfer Learning*")
             st.markdown("📊 *Prediction vector internally computed*")
+
 # Run app
 if __name__ == "__main__":
     run()
