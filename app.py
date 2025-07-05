@@ -96,10 +96,6 @@ def run():
         if display_mode == "Detailed":
             st.markdown("🔧 *Model: VGG-16 with Transfer Learning*")
             st.markdown("📊 *Prediction vector internally computed*")
-
-        # Cleanup uploaded image
-        if sample_choice == "None" and os.path.exists(image_path):
-
 # Run app
 if __name__ == "__main__":
     run()
