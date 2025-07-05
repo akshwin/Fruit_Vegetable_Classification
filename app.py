@@ -113,7 +113,6 @@ def run():
         if display_mode == "Detailed":
             st.markdown("🔧 *Model: VGG-16 with Transfer Learning*")
             st.markdown("📊 *Prediction vector internally computed*")
-
 # Run app
 if __name__ == "__main__":
     run()
