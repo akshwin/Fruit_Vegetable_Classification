@@ -99,7 +99,6 @@ def run():
 
         # Cleanup uploaded image
         if sample_choice == "None" and os.path.exists(image_path):
-            os.remove(image_path)
 
 # Run app
 if __name__ == "__main__":
