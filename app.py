@@ -48,8 +48,11 @@ def run():
 
     # Sidebar
     st.sidebar.title("Fruit & Veggie Classifier 🥦")
-    st.sidebar.markdown("Model Used: **VGG-16**")
-    st.sidebar.markdown("- Upload or select a sample image.")
+    st.sidebar.markdown("""
+- Transfer learning is used for better generalization  
+- VGG-16 model provided the best accuracy in experiments  
+- Input images are resized to 224x224 pixels    
+""")
 
     display_mode = st.sidebar.selectbox("🔍 Display Mode", ["Basic", "Detailed"])
     show_confidence = st.sidebar.selectbox("📈 Show Confidence Score?", ["Yes", "No"])
@@ -72,7 +75,9 @@ def run():
     if sample_choice != "None":
         image_path = f"./upload_image/{sample_choice.lower()}.jpeg"
         if os.path.exists(image_path):
+            st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
             st.image(Image.open(image_path), caption=f"Sample Image: {sample_choice}", width=300)
+            st.markdown("</div>", unsafe_allow_html=True)
         else:
             st.error(f"❌ Sample image not found: `{image_path}`")
             return
@@ -86,15 +91,15 @@ def run():
                 f.write(img_file.getbuffer())
 
             if os.path.exists(image_path):
+                st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
                 st.image(Image.open(image_path), caption="Uploaded Image", width=300)
+                st.markdown("</div>", unsafe_allow_html=True)
             else:
                 st.error("❌ Failed to save uploaded image.")
                 return
         except Exception as e:
             st.error(f"❌ Error processing uploaded image: {e}")
             return
-    else:
-        st.warning("Please upload an image or select a sample to continue.")
         return
 
     # Prediction
@@ -113,6 +118,7 @@ def run():
         if display_mode == "Detailed":
             st.markdown("🔧 *Model: VGG-16 with Transfer Learning*")
             st.markdown("📊 *Prediction vector internally computed*")
+
 # Run app
 if __name__ == "__main__":
     run()
