@@ -77,7 +77,7 @@ def run():
         if os.path.exists(image_path):
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                st.image(Image.open(image_path), caption=f"Sample Image: {sample_choice}", use_column_width=True)
+                st.image(Image.open(image_path), caption=f"Sample Image: {sample_choice}", use_container_width=True)
         else:
             st.error(f"❌ Sample image not found: `{image_path}`")
             return
@@ -94,7 +94,7 @@ def run():
             if os.path.exists(image_path):
                 col1, col2, col3 = st.columns([1, 2, 1])
                 with col2:
-                    st.image(Image.open(image_path), caption="Uploaded Image", use_column_width=True)
+                    st.image(Image.open(image_path), caption="Uploaded Image", use_ccontainer_width=True)
             else:
                 st.error("❌ Failed to save uploaded image.")
                 return
