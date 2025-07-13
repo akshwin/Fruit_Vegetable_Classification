@@ -75,12 +75,13 @@ def run():
     if sample_choice != "None":
         image_path = f"./upload_image/{sample_choice.lower()}.jpeg"
         if os.path.exists(image_path):
-            st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
-            st.image(Image.open(image_path), caption=f"Sample Image: {sample_choice}", width=300)
-            st.markdown("</div>", unsafe_allow_html=True)
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                st.image(Image.open(image_path), caption=f"Sample Image: {sample_choice}", use_column_width=True)
         else:
             st.error(f"❌ Sample image not found: `{image_path}`")
             return
+
     elif img_file is not None:
         upload_dir = "./upload_image"
         os.makedirs(upload_dir, exist_ok=True)
@@ -91,9 +92,9 @@ def run():
                 f.write(img_file.getbuffer())
 
             if os.path.exists(image_path):
-                st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
-                st.image(Image.open(image_path), caption="Uploaded Image", width=300)
-                st.markdown("</div>", unsafe_allow_html=True)
+                col1, col2, col3 = st.columns([1, 2, 1])
+                with col2:
+                    st.image(Image.open(image_path), caption="Uploaded Image", use_column_width=True)
             else:
                 st.error("❌ Failed to save uploaded image.")
                 return
